@@ -64,11 +64,18 @@ class Client {
           }
             
           // loop for equations
-          while(!sentence.equals("EXIT"))
+          while(true)
             {
                 System.out.println("Enter equation: ");  
                 sentence = inFromUser.readLine(); // waits for user input
 
+                if (sentence.equalsIgnoreCase("EXIT")) {
+                  outToServer.writeBytes("EXIT\n");
+                  modifiedSentence = inFromServer.readLine(); // read BYE|name
+                  System.out.println("FROM SERVER: " + modifiedSentence);
+                  break;
+                }
+          
                 outToServer.writeBytes("CALC|" + sentence + '\n');
                 modifiedSentence = inFromServer.readLine();
                 System.out.println("FROM SERVER: " + modifiedSentence);
