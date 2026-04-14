@@ -30,7 +30,7 @@ class Client {
           System.out.println("Enter client name: ");  // ask user for username
           sentence = inFromUser.readLine(); // waits for user input
           // prepend "JOIN" to username to match message format
-          sentence = "JOIN: " + sentence; 
+          sentence = "JOIN|" + sentence; 
           
           // sends inital message to server
           outToServer.writeBytes(sentence + '\n');
@@ -50,7 +50,7 @@ class Client {
           } */
 
           // if one server doesn't return ACK, failed connection
-          if(!modifiedSentence.equals("ACK"))
+          if(!modifiedSentence.startsWith("ACK"))
           {
               System.out.println("Connection to server failed");
               clientSocket.close();
@@ -69,7 +69,7 @@ class Client {
                 System.out.println("Enter equation: ");  
                 sentence = inFromUser.readLine(); // waits for user input
 
-                outToServer.writeBytes(sentence + '\n');
+                outToServer.writeBytes("CALC|" + sentence + '\n');
                 modifiedSentence = inFromServer.readLine();
                 System.out.println("FROM SERVER: " + modifiedSentence);
             }

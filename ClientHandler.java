@@ -23,7 +23,7 @@ public class ClientHandler implements Runnable {
                 new InputStreamReader(socket.getInputStream()));
             PrintWriter    out = new PrintWriter(
                 new OutputStreamWriter(socket.getOutputStream()), true)
-                
+
         ) {
             String firstMessage = in.readLine();
  
@@ -40,7 +40,7 @@ public class ClientHandler implements Runnable {
             String message;
             while ((message = in.readLine()) != null) {
  
-                if (message.equalsIgnoreCase("QUIT")) {
+                if (message.equalsIgnoreCase("EXIT")) {
                     out.println("BYE|" + clientName);
                     logger.logDisconnect(clientName, connectedAt);
                     break;
