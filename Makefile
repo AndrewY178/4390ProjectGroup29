@@ -1,30 +1,30 @@
-# TENTATIVE MAKEFILE
-# to run server: enter "make server"
-# to run client: enter "make client"
+# Variables
+JAVAC = javac
+JAVA = java
+# Find all .java files in the directory automatically
+SOURCES = $(wildcard *.java)
+# Substitute .java extension with .class for the target list
+CLASSES = $(SOURCES:.java=.class)
 
-JAVA = java # java runtime command
-JAVAC = javac # java compiler
-
-# source files
-SOURCES = Client.java ClientHandler.java MathEvaluator.java MathServer.java ServerLogger.java
-# converts java to class 
-CLASSES = Client.class ClientHandler.class MathEvaluator.class MathServer.class ServerLogger.class
-
-# makes all default target
+# Default target
 all: $(CLASSES)
 
-# match class to java files !! may have to use newer version !!
-.java.class:
-	$(JAVAC) $*.java
+# Rule to compile .java to .class
+# The tab at the start of the next line is REQUIRED
+%.class: %.java
+	$(JAVAC) $<
 
-# runs server 
+# Target to run the server
 server: all
-  $(JAVA) MathServer
+	$(JAVA) MathServer
 
-# runs client 
+# Target to run the client
 client: all
 	$(JAVA) Client
 
-# remvoes class files
+# Clean up compiled files
 clean:
 	rm -f *.class
+
+# Prevents make from getting confused if a file named 'clean' or 'all' exists
+.PHONY: all server client clean
