@@ -77,7 +77,7 @@ public class ClientHandler implements Runnable {
         try {
             double result = MathEvaluator.evaluate(expression);
             String resultStr = (result == Math.floor(result) && !Double.isInfinite(result)) ? String.valueOf((long) result) : String.format("%.2f", result);
-            out.println("RESULT|" + expression + "|" + resultStr);
+            out.println("RESULT|" + expression + " = " + resultStr);
             logger.logResponse(clientName, expression, resultStr);
         } catch (IllegalArgumentException e) {
             String reason = e.getMessage();
