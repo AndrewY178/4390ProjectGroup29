@@ -14,9 +14,11 @@ all: $(CLASSES)
 %.class: %.java
 	$(JAVAC) $<
 
-# Target to run the server
+PORT = 6789
+
+# Update the server target
 server: all
-	$(JAVA) MathServer
+	$(JAVA) MathServer $(PORT)
 
 # Target to run the client
 client: all

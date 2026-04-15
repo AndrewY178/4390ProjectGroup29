@@ -27,7 +27,7 @@ public class ClientHandler implements Runnable {
         ) {
             String firstMessage = in.readLine();
  
-            if (firstMessage == null || !firstMessage.startsWith("JOIN|")) {
+            if (firstMessage == null || !firstMessage.startsWith("JOIN| ")) {
                 logger.logError("???", "Expected JOIN, got: " + firstMessage);
                 return;
             }
@@ -35,18 +35,18 @@ public class ClientHandler implements Runnable {
             connectedAt = Instant.now();
             String clientIP = socket.getInetAddress().getHostAddress();
             logger.logJoin(clientName, clientIP);
-            out.println("ACK|" + clientName);
+            out.println("ACK| " + clientName);
 
             String message;
             while ((message = in.readLine()) != null) {
  
                 if (message.equalsIgnoreCase("EXIT")) {
-                    out.println("BYE|" + clientName);
+                    out.println("BYE| " + clientName);
                     logger.logDisconnect(clientName, connectedAt);
                     break;
                 }
  
-                if (message.startsWith("CALC|")) {
+                if (message.startsWith("CALC| ")) {
                     handleCalc(message, out);
                 } else {
                     logger.logError(clientName, "Unknown message: " + message);
@@ -77,12 +77,12 @@ public class ClientHandler implements Runnable {
         try {
             double result = MathEvaluator.evaluate(expression);
             String resultStr = (result == Math.floor(result) && !Double.isInfinite(result)) ? String.valueOf((long) result) : String.format("%.2f", result);
-            out.println("RESULT|" + expression + " = " + resultStr);
+            out.println("RESULT| " + expression + " = " + resultStr);
             logger.logResponse(clientName, expression, resultStr);
         } catch (IllegalArgumentException e) {
             String reason = e.getMessage();
             logger.logError(clientName, "Bad expression [" + expression + "]: " + reason);
-            out.println("ERROR|" + expression + "|" + reason);
+            out.println("ERROR| " + expression + "|" + reason);
         }
     }
 }
