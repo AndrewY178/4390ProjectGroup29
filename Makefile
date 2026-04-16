@@ -15,6 +15,7 @@ all: $(CLASSES)
 	$(JAVAC) $<
 
 PORT = 6789
+HOST = 127.0.0.1
 
 # Update the server target
 server: all
@@ -22,7 +23,7 @@ server: all
 
 # Target to run the client
 client: all
-	$(JAVA) Client
+	$(JAVA) Client $(HOST) $(PORT)
 
 # Clean up compiled files
 clean:
