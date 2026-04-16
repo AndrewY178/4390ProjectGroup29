@@ -23,7 +23,7 @@ server: all
 
 # Target to run the client
 client: all
-	$(JAVA) Client $(HOST) $(PORT)
+	$(JAVA) Client $(PORT)
 
 # Clean up compiled files
 clean:

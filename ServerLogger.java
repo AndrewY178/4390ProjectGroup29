@@ -18,6 +18,7 @@ public class ServerLogger {
         this.fileWriter = tempWriter;
     }
 
+    // Logs client connection with name, IP, and timestamp
     public synchronized void logJoin(String clientName, String address, Instant connectedAt) {
         String msg = String.format(
             "[CONNECT]    Name: %-15s | Start: %s | IP: %s",
@@ -25,18 +26,21 @@ public class ServerLogger {
         print(msg);
     }
 
+    // Logs client requests with name, expression, and timestamp
     public synchronized void logRequest(String clientName, String expression) {
         String msg = String.format("[REQUEST]    Name: %-15s | Expression: %s",
             clientName, expression);
         print(msg);
     }
 
+    // Logs client responses with name, expression, result, and timestamp
     public synchronized void logResponse(String clientName, String expression, String result) {
         String msg = String.format("[RESPONSE]   Name: %-15s | Expression: %-20s | Result: %s",
             clientName, expression, result);
         print(msg);
     }
 
+    // Logs client disconnection with name, connection duration, and timestamp
     public synchronized void logDisconnect(String clientName, Instant connectedAt) {
         Instant disconnectedAt = Instant.now();
         long seconds = Duration.between(connectedAt, disconnectedAt).getSeconds();
@@ -47,30 +51,35 @@ public class ServerLogger {
         print(msg);
     }
 
+    // Logs general informational messages with timestamp
     public synchronized void logInfo(String message) {
         String msg = String.format("[INFO]       %s | Time: %s", message, now());
         print(msg);
     }
 
+    // Logs errors with client name, error message, and timestamp
     public synchronized void logError(String clientName, String error) {
         String msg = String.format("[ERROR]      Name: %-15s | %s | Time: %s",
             clientName, error, now());
         print(msg);
     }
 
+    // Closes the log file writer
     public synchronized void close() {
         if (fileWriter != null) fileWriter.close();
     }
 
-
+    // Helper method to format Instant to a readable string
     private String format(Instant instant) {
         return LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).format(FORMATTER);
     }
 
+    // Helper method to get current time as a formatted string
     private String now() {
         return LocalDateTime.now().format(FORMATTER);
     }
 
+    // Helper method to print messages to console and log file
     private void print(String msg) {
         System.out.println(msg);
         if (fileWriter != null) fileWriter.println(msg);

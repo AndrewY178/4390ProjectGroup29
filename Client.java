@@ -11,7 +11,17 @@ class Client {
         System.out.println("Client is running: " );
 
         // create client socket
-        Socket clientSocket = new Socket("127.0.0.1", 6789);
+        int port;
+        try {
+          port = Integer.parseInt(argv[0]);
+        }
+        catch (NumberFormatException e) {
+            System.err.println("Invalid port number: " + argv[0]);
+            System.exit(1);
+            return;
+        }
+
+        Socket clientSocket = new Socket("127.0.0.1", port);
 
         // allows input from the user
         BufferedReader inFromUser =
