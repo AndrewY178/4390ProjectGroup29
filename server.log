@@ -1,0 +1,27 @@
+[INFO]       MathServer starting on port 6789 | Time: 2026-04-16 15:01:54
+[INFO]       Waiting for client connections... | Time: 2026-04-16 15:01:54
+[CONNECT]    Name: Andrew          | Start: 2026-04-16 15:01:59 | IP: 127.0.0.1
+[CONNECT]    Name: Java            | Start: 2026-04-16 15:02:04 | IP: 127.0.0.1
+[REQUEST]    Name: Andrew          | Expression: 5 + 6
+[RESPONSE]   Name: Andrew          | Expression: 5 + 6                | Result: 11
+[REQUEST]    Name: Java            | Expression: 9 + 2
+[RESPONSE]   Name: Java            | Expression: 9 + 2                | Result: 11
+[REQUEST]    Name: Andrew          | Expression: 2
+[ERROR]      Name: Andrew          | Bad expression [2]: Expected format: <operand1> <operator> <operand2> (got 1 token(s)) | Time: 2026-04-16 15:02:27
+[REQUEST]    Name: Java            | Expression: 3
+[ERROR]      Name: Java            | Bad expression [3]: Expected format: <operand1> <operator> <operand2> (got 1 token(s)) | Time: 2026-04-16 15:02:29
+[DISCONNECT] Name: Andrew          | Start: 2026-04-16 15:01:59 | End: 2026-04-16 15:02:32 | Duration: 32 sec
+[REQUEST]    Name: Java            | Expression: 3 + 5
+[RESPONSE]   Name: Java            | Expression: 3 + 5                | Result: 8
+[REQUEST]    Name: Java            | Expression: 3+23
+[ERROR]      Name: Java            | Bad expression [3+23]: Expected format: <operand1> <operator> <operand2> (got 1 token(s)) | Time: 2026-04-16 15:02:39
+[REQUEST]    Name: Java            | Expression: 3 +* 2
+[ERROR]      Name: Java            | Bad expression [3 +* 2]: Unsupported operator '+*' (use +, -, *, or /) | Time: 2026-04-16 15:02:43
+[REQUEST]    Name: Java            | Expression: 3 * 23
+[RESPONSE]   Name: Java            | Expression: 3 * 23               | Result: 69
+[CONNECT]    Name: Hello           | Start: 2026-04-16 15:03:23 | IP: 127.0.0.1
+[REQUEST]    Name: Hello           | Expression: hmm
+[ERROR]      Name: Hello           | Bad expression [hmm]: Expected format: <operand1> <operator> <operand2> (got 1 token(s)) | Time: 2026-04-16 15:03:26
+[INFO]       MathServer shutting down | Time: 2026-04-16 15:03:34
+[INFO]       MathServer starting on port 6789 | Time: 2026-04-16 15:03:45
+[INFO]       Waiting for client connections... | Time: 2026-04-16 15:03:45

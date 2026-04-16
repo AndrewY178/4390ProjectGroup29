@@ -18,9 +18,10 @@ public class ServerLogger {
         this.fileWriter = tempWriter;
     }
 
-    public synchronized void logJoin(String clientName, String address) {
-        String msg = String.format("[CONNECT]    Name: %-15s | IP: %-15s | Time: %s",
-            clientName, address, now());
+    public synchronized void logJoin(String clientName, String address, Instant connectedAt) {
+        String msg = String.format(
+            "[CONNECT]    Name: %-15s | Start: %s | IP: %s",
+            clientName, format(connectedAt), address);
         print(msg);
     }
 
@@ -37,9 +38,12 @@ public class ServerLogger {
     }
 
     public synchronized void logDisconnect(String clientName, Instant connectedAt) {
-        long seconds = Duration.between(connectedAt, Instant.now()).getSeconds();
-        String msg = String.format("[DISCONNECT] Name: %-15s | Duration: %d sec | Time: %s",
-            clientName, seconds, now());
+        Instant disconnectedAt = Instant.now();
+        long seconds = Duration.between(connectedAt, disconnectedAt).getSeconds();
+ 
+        String msg = String.format(
+            "[DISCONNECT] Name: %-15s | Start: %s | End: %s | Duration: %d sec",
+            clientName,format(connectedAt),format(disconnectedAt),seconds);
         print(msg);
     }
 
@@ -56,6 +60,11 @@ public class ServerLogger {
 
     public synchronized void close() {
         if (fileWriter != null) fileWriter.close();
+    }
+
+
+    private String format(Instant instant) {
+        return LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).format(FORMATTER);
     }
 
     private String now() {

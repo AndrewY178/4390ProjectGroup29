@@ -27,26 +27,26 @@ public class ClientHandler implements Runnable {
         ) {
             String firstMessage = in.readLine();
  
-            if (firstMessage == null || !firstMessage.startsWith("JOIN| ")) {
+            if (firstMessage == null || !firstMessage.startsWith("JOIN|")) {
                 logger.logError("???", "Expected JOIN, got: " + firstMessage);
                 return;
             }
             clientName  = firstMessage.substring(5).trim();
             connectedAt = Instant.now();
             String clientIP = socket.getInetAddress().getHostAddress();
-            logger.logJoin(clientName, clientIP);
-            out.println("ACK| " + clientName);
+            logger.logJoin(clientName, clientIP, connectedAt);
+            out.println("ACK|" + clientName);
 
             String message;
             while ((message = in.readLine()) != null) {
  
                 if (message.equalsIgnoreCase("EXIT")) {
-                    out.println("BYE| " + clientName);
+                    out.println("BYE|" + clientName);
                     logger.logDisconnect(clientName, connectedAt);
                     break;
                 }
  
-                if (message.startsWith("CALC| ")) {
+                if (message.startsWith("CALC|")) {
                     handleCalc(message, out);
                 } else {
                     logger.logError(clientName, "Unknown message: " + message);
